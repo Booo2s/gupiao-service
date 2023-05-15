@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.StockInfoMapper">
+    
+    <resultMap type="StockInfo" id="StockInfoResult">
+        <result property="id"    column="id"    />
+        <result property="stockNo"    column="stock_no"    />
+        <result property="tradeDate"    column="trade_date"    />
+        <result property="openPrice"    column="open_price"    />
+        <result property="maxPrice"    column="max_price"    />
+        <result property="minPrice"    column="min_price"    />
+        <result property="closePrice"    column="close_price"    />
+        <result property="yesterdayClosePrice"    column="yesterday_close_price"    />
+        <result property="changeAmount"    column="change_amount"    />
+        <result property="changeRate"    column="change_rate"    />
+        <result property="tradingVolume"    column="trading_volume"    />
+        <result property="tradingAmount"    column="trading_amount"    />
+        <result property="insertTime"    column="insert_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="addUserId"    column="add_user_id"    />
+    </resultMap>
+
+    <sql id="selectStockInfoVo">
+        select id, stock_no, trade_date, open_price, max_price, min_price, close_price, yesterday_close_price, change_amount, change_rate, trading_volume, trading_amount, insert_time, update_time, add_user_id from stock_info
+    </sql>
+
+    <select id="selectStockInfoList" parameterType="StockInfo" resultMap="StockInfoResult">
+        <include refid="selectStockInfoVo"/>
+        <where>  
+            <if test="stockNo != null  and stockNo != ''"> and stock_no = #{stockNo}</if>
+            <if test="tradeDate != null  and tradeDate != ''"> and trade_date = #{tradeDate}</if>
+            <if test="insertTime != null "> and insert_time = #{insertTime}</if>
+            <if test="addUserId != null "> and add_user_id = #{addUserId}</if>
+        </where>
+    </select>
+    
+    <select id="selectStockInfoById" parameterType="Long" resultMap="StockInfoResult">
+        <include refid="selectStockInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStockInfo" parameterType="StockInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into stock_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stockNo != null">stock_no,</if>
+            <if test="tradeDate != null">trade_date,</if>
+            <if test="openPrice != null">open_price,</if>
+            <if test="maxPrice != null">max_price,</if>
+            <if test="minPrice != null">min_price,</if>
+            <if test="closePrice != null">close_price,</if>
+            <if test="yesterdayClosePrice != null">yesterday_close_price,</if>
+            <if test="changeAmount != null">change_amount,</if>
+            <if test="changeRate != null">change_rate,</if>
+            <if test="tradingVolume != null">trading_volume,</if>
+            <if test="tradingAmount != null">trading_amount,</if>
+            <if test="insertTime != null">insert_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="addUserId != null">add_user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stockNo != null">#{stockNo},</if>
+            <if test="tradeDate != null">#{tradeDate},</if>
+            <if test="openPrice != null">#{openPrice},</if>
+            <if test="maxPrice != null">#{maxPrice},</if>
+            <if test="minPrice != null">#{minPrice},</if>
+            <if test="closePrice != null">#{closePrice},</if>
+            <if test="yesterdayClosePrice != null">#{yesterdayClosePrice},</if>
+            <if test="changeAmount != null">#{changeAmount},</if>
+            <if test="changeRate != null">#{changeRate},</if>
+            <if test="tradingVolume != null">#{tradingVolume},</if>
+            <if test="tradingAmount != null">#{tradingAmount},</if>
+            <if test="insertTime != null">#{insertTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="addUserId != null">#{addUserId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStockInfo" parameterType="StockInfo">
+        update stock_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stockNo != null">stock_no = #{stockNo},</if>
+            <if test="tradeDate != null">trade_date = #{tradeDate},</if>
+            <if test="openPrice != null">open_price = #{openPrice},</if>
+            <if test="maxPrice != null">max_price = #{maxPrice},</if>
+            <if test="minPrice != null">min_price = #{minPrice},</if>
+            <if test="closePrice != null">close_price = #{closePrice},</if>
+            <if test="yesterdayClosePrice != null">yesterday_close_price = #{yesterdayClosePrice},</if>
+            <if test="changeAmount != null">change_amount = #{changeAmount},</if>
+            <if test="changeRate != null">change_rate = #{changeRate},</if>
+            <if test="tradingVolume != null">trading_volume = #{tradingVolume},</if>
+            <if test="tradingAmount != null">trading_amount = #{tradingAmount},</if>
+            <if test="insertTime != null">insert_time = #{insertTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="addUserId != null">add_user_id = #{addUserId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStockInfoById" parameterType="Long">
+        delete from stock_info where id = #{id}
+    </delete>
+
+    <delete id="deleteStockInfoByIds" parameterType="String">
+        delete from stock_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

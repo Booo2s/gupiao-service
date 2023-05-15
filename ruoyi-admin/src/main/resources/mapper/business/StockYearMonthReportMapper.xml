@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.StockYearMonthReportMapper">
+    
+    <resultMap type="StockYearMonthReport" id="StockYearMonthReportResult">
+        <result property="stockNo"    column="stock_no"    />
+        <result property="sumDate"    column="sum_date"    />
+        <result property="maxOpenPrice"    column="max_open_price"    />
+        <result property="avgOpenPrice"    column="avg_open_price"    />
+        <result property="minOpenPrice"    column="min_open_price"    />
+        <result property="maxClosePrice"    column="max_close_price"    />
+        <result property="avgClosePrice"    column="avg_close_price"    />
+        <result property="minClosePrice"    column="min_close_price"    />
+        <result property="maxMaxPrice"    column="max_max_price"    />
+        <result property="avgMinPrice"    column="avg_min_price"    />
+        <result property="minMinPrice"    column="min_min_price"    />
+        <result property="maxChangeAmount"    column="max_change_amount"    />
+        <result property="avgChangeAmount"    column="avg_change_amount"    />
+        <result property="minChangeAmount"    column="min_change_amount"    />
+        <result property="maxChangeRate"    column="max_change_rate"    />
+        <result property="avgChangeRate"    column="avg_change_rate"    />
+        <result property="minChangeRate"    column="min_change_rate"    />
+        <result property="sumTradingVolume"    column="sum_trading_volume"    />
+        <result property="sumTradingAmount"    column="sum_trading_amount"    />
+        <result property="flag"    column="flag"    />
+    </resultMap>
+
+    <sql id="selectStockYearMonthReportVo">
+        select stock_no, sum_date, max_open_price, avg_open_price, min_open_price, max_close_price, avg_close_price, min_close_price, max_max_price, avg_min_price, min_min_price, max_change_amount, avg_change_amount, min_change_amount, max_change_rate, avg_change_rate, min_change_rate, sum_trading_volume, sum_trading_amount, flag from stock_year_month_report
+    </sql>
+
+    <select id="selectStockYearMonthReportList" parameterType="StockYearMonthReport" resultMap="StockYearMonthReportResult">
+        <include refid="selectStockYearMonthReportVo"/>
+        <where>  
+            <if test="stockNo != null  and stockNo != ''"> and stock_no = #{stockNo}</if>
+            <if test="sumDate != null  and sumDate != ''"> and sum_date = #{sumDate}</if>
+            <if test="flag != null "> and flag = #{flag}</if>
+        </where>
+    </select>
+    
+    <select id="selectStockYearMonthReportByStockNo" parameterType="String" resultMap="StockYearMonthReportResult">
+        <include refid="selectStockYearMonthReportVo"/>
+        where stock_no = #{stockNo}
+    </select>
+        
+    <insert id="insertStockYearMonthReport" parameterType="StockYearMonthReport">
+        insert into stock_year_month_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stockNo != null">stock_no,</if>
+            <if test="sumDate != null">sum_date,</if>
+            <if test="maxOpenPrice != null">max_open_price,</if>
+            <if test="avgOpenPrice != null">avg_open_price,</if>
+            <if test="minOpenPrice != null">min_open_price,</if>
+            <if test="maxClosePrice != null">max_close_price,</if>
+            <if test="avgClosePrice != null">avg_close_price,</if>
+            <if test="minClosePrice != null">min_close_price,</if>
+            <if test="maxMaxPrice != null">max_max_price,</if>
+            <if test="avgMinPrice != null">avg_min_price,</if>
+            <if test="minMinPrice != null">min_min_price,</if>
+            <if test="maxChangeAmount != null">max_change_amount,</if>
+            <if test="avgChangeAmount != null">avg_change_amount,</if>
+            <if test="minChangeAmount != null">min_change_amount,</if>
+            <if test="maxChangeRate != null">max_change_rate,</if>
+            <if test="avgChangeRate != null">avg_change_rate,</if>
+            <if test="minChangeRate != null">min_change_rate,</if>
+            <if test="sumTradingVolume != null">sum_trading_volume,</if>
+            <if test="sumTradingAmount != null">sum_trading_amount,</if>
+            <if test="flag != null">flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stockNo != null">#{stockNo},</if>
+            <if test="sumDate != null">#{sumDate},</if>
+            <if test="maxOpenPrice != null">#{maxOpenPrice},</if>
+            <if test="avgOpenPrice != null">#{avgOpenPrice},</if>
+            <if test="minOpenPrice != null">#{minOpenPrice},</if>
+            <if test="maxClosePrice != null">#{maxClosePrice},</if>
+            <if test="avgClosePrice != null">#{avgClosePrice},</if>
+            <if test="minClosePrice != null">#{minClosePrice},</if>
+            <if test="maxMaxPrice != null">#{maxMaxPrice},</if>
+            <if test="avgMinPrice != null">#{avgMinPrice},</if>
+            <if test="minMinPrice != null">#{minMinPrice},</if>
+            <if test="maxChangeAmount != null">#{maxChangeAmount},</if>
+            <if test="avgChangeAmount != null">#{avgChangeAmount},</if>
+            <if test="minChangeAmount != null">#{minChangeAmount},</if>
+            <if test="maxChangeRate != null">#{maxChangeRate},</if>
+            <if test="avgChangeRate != null">#{avgChangeRate},</if>
+            <if test="minChangeRate != null">#{minChangeRate},</if>
+            <if test="sumTradingVolume != null">#{sumTradingVolume},</if>
+            <if test="sumTradingAmount != null">#{sumTradingAmount},</if>
+            <if test="flag != null">#{flag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStockYearMonthReport" parameterType="StockYearMonthReport">
+        update stock_year_month_report
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sumDate != null">sum_date = #{sumDate},</if>
+            <if test="maxOpenPrice != null">max_open_price = #{maxOpenPrice},</if>
+            <if test="avgOpenPrice != null">avg_open_price = #{avgOpenPrice},</if>
+            <if test="minOpenPrice != null">min_open_price = #{minOpenPrice},</if>
+            <if test="maxClosePrice != null">max_close_price = #{maxClosePrice},</if>
+            <if test="avgClosePrice != null">avg_close_price = #{avgClosePrice},</if>
+            <if test="minClosePrice != null">min_close_price = #{minClosePrice},</if>
+            <if test="maxMaxPrice != null">max_max_price = #{maxMaxPrice},</if>
+            <if test="avgMinPrice != null">avg_min_price = #{avgMinPrice},</if>
+            <if test="minMinPrice != null">min_min_price = #{minMinPrice},</if>
+            <if test="maxChangeAmount != null">max_change_amount = #{maxChangeAmount},</if>
+            <if test="avgChangeAmount != null">avg_change_amount = #{avgChangeAmount},</if>
+            <if test="minChangeAmount != null">min_change_amount = #{minChangeAmount},</if>
+            <if test="maxChangeRate != null">max_change_rate = #{maxChangeRate},</if>
+            <if test="avgChangeRate != null">avg_change_rate = #{avgChangeRate},</if>
+            <if test="minChangeRate != null">min_change_rate = #{minChangeRate},</if>
+            <if test="sumTradingVolume != null">sum_trading_volume = #{sumTradingVolume},</if>
+            <if test="sumTradingAmount != null">sum_trading_amount = #{sumTradingAmount},</if>
+            <if test="flag != null">flag = #{flag},</if>
+        </trim>
+        where stock_no = #{stockNo}
+    </update>
+
+    <delete id="deleteStockYearMonthReportByStockNo" parameterType="String">
+        delete from stock_year_month_report where stock_no = #{stockNo}
+    </delete>
+
+    <delete id="deleteStockYearMonthReportByStockNos" parameterType="String">
+        delete from stock_year_month_report where stock_no in 
+        <foreach item="stockNo" collection="array" open="(" separator="," close=")">
+            #{stockNo}
+        </foreach>
+    </delete>
+</mapper>
